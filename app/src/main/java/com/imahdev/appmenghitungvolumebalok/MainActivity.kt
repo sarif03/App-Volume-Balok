@@ -14,6 +14,9 @@ class MainActivity : AppCompatActivity() {
     private lateinit var btnHitung: Button
     private lateinit var tvHasil: TextView
 
+    companion object {
+        const val STATE_RESULT = "state_result"
+    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -24,6 +27,11 @@ class MainActivity : AppCompatActivity() {
         edtTinggi = findViewById(R.id.edt_tinggi)
         tvHasil = findViewById(R.id.tv_hasil)
         btnHitung = findViewById(R.id.btn_hitung)
+
+        if (savedInstanceState != null) {
+            tvHasil.text = savedInstanceState.getString(STATE_RESULT)
+
+        }
 
         // membuat action klik pada button
         btnHitung.setOnClickListener {
@@ -54,5 +62,10 @@ class MainActivity : AppCompatActivity() {
                 tvHasil.text= volume.toString()
             }
         }
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putString(STATE_RESULT, tvHasil.text.toString())
     }
 }
